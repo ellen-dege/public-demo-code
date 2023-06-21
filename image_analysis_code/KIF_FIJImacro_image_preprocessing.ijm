@@ -1,10 +1,12 @@
-//AdjColorBal4chMultipleMerge v6
+//AdjustColorBalance_4channel_MultipleMerge v6
 
-//This FIJI macro will take inputs of directories of 4 channel 8 or 16-bit images, auto-adjust color, and
+//Usage:
+//  This FIJI macro will take inputs of directories of 4 channel 8 or 16-bit images, auto-adjust color, and
 //  merge into multiple sets: individual 8-bit grayscale images, 2-, 3-, and 4-channel colorized images.
 
-//Purpose: for standardized and easier downstream manipulation (e.g. cell counting, image publication)
-//Saves to a different, specified output folder (cannot be nested in the input folder).
+//Purpose:
+//  For standardized and easier downstream manipulation (e.g. cell counting, image publication)
+//  Saves to a different, specified output folder (cannot be nested in the input folder).
 
 //Author: Ellen DeGennaro
 //January 4, 2021
