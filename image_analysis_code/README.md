@@ -32,7 +32,7 @@ Accordingly, my workding directories within the parent folder for this workflow 
 
 In the below sections, I will expand in detail on the protocol steps for which I developed code and/or a detailed workflow in FIJI.
 
-## 1. Obtain microscope images
+### 1. Obtain microscope images
 
 Once you have obtained your microscopy image files (we use Zeiss microscopes, so these will be in .czi format) and backed them up, a copy of good images for analysis should be located in a single directory. I name this directory "01_originals". Before running, you'll want to check that all your input files have no spaces in them! My ImageJ/FIJI macros do not tolerate this. I also find that using a standard, informative naming convention for microscopy files is very helpful within the same experiment or experiment type.
 
@@ -68,11 +68,15 @@ Next you will see your composite image appear with all the channels appearing to
 If there are more images in the input directory to process, the macro will repeat this process until it reaches the end of the file list.
 
 #### Outputs
-The outputs generated in your output directory ("02_preprocessed") will then be a total of 12 files (assuming a 4-channel input file, which is what is being demonstrated here. I have alternate versions of this pipeline for 2- or 3-channel images):
+The outputs generated in your output directory ("02_preprocessed") will then be a total of 12 files (assuming a 4-channel input file, which is what is being demonstrated here.
 - 4 single-channel grayscale images of each channel (e.g. DAPI, green, red, far-red)
-- 4 two-channel colorized images of the green channel vs. other stains for quantification (more on this later...)
-- 2 three-channel images
-- 2 four-channel images
+- 4 two-channel grayscale and colorized RGB images of the green channel vs. each of the two other color stains for quantification (see below)
+- 2 three-channel images (grayscale multichannel and single merged RGB image)
+- 2 four-channel images (grayscale multichannel and single merged RGB image)
+
+I have alternate versions of this pipeline for 2- or 3-channel images, but the full 4-channel macro code should be easily modifiable to your own needs. This pipeline also defaults to the 4th channel (in blue) being a nuclear stain not used for quantification (hence only two pairs of two-channel images output).
+
+The purpose of saving all the single-channel grayscale images is to ensure that any combinations of all channels that you would like to combine or recolor will be easily found for downstream processing and publication.
 
 ### 3. Assemble multi-channel images for counting
 
@@ -95,7 +99,7 @@ To save your results, you will want to save a copy of the image itself (will sav
 
 ### 6. Unblind images and analyze results
 
-With the log.txt and results_00NN.txt files as inputs, you can now use the [Laminar Distance Analysis python script](https://github.com/ellen-dege/public-demo-code/blob/main/image_analysis_code/KIF_laminar_dist_analysis03.ipynb) to quantify the laminar distance aka vertical positioning of the cells in your tissue. This sample only looks at the vertical position of cells in one single microscope image channel across 4 different conditions, but this can also be done across the different stained color channels or within sub-populations of cells that were labeled by multiple overlapping channels.
+With the log.txt and results_00NN.txt files as inputs, you can now use the above [Laminar Distance Analysis python script](https://github.com/ellen-dege/public-demo-code/blob/main/image_analysis_code/KIF_laminar_dist_analysis03.ipynb) to quantify the laminar distance aka vertical positioning of the cells in your tissue. This sample only looks at the vertical position of cells in one single microscope image channel across 4 different conditions, but this can also be done across the different stained color channels or within sub-populations of cells that were labeled by multiple overlapping channels.
 
 # References and related links
 - [ImageJ/FIJI documentation](https://imagej.net/ij/index.html)
