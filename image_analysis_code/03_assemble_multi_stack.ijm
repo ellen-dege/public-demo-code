@@ -1,13 +1,16 @@
-//MakeStackforCounting v2
+//Make Stack for Counting v3
 
+//Usage:
 // This macro will take in single-channel grayscale tifs and their RGB colorized merge (as previously processed by
 // AdjColorBal4chMultipleMerge06) and arrange them into an image stack for easier quantification.
-//There should be 3 single-channel images, Ch2only, Ch3only, and Ch4only, and two colorized RGB merged images,
-//for a total of 5 input images per imaged section.
+
+// There should be 3 single-channel images, Ch2only, Ch3only, and Ch4only, and two colorized RGB merged images,
+// for a total of 5 input images per imaged section.
+//NB: Files may be ordered differently according to your microscopists naming convention, which will alter the code below.
 
 ////Author: Ellen DeGennaro
 //January 11, 2021
-//Updated 4/29/21
+//Updated 6/22/23
 
 //TODO:
 //	-Make more invariant: tolerate different filenames
@@ -41,14 +44,15 @@ function modifyImages() {
           	//want to make sure that filenames are correct so that channels get sorted appropriately
           
 		  ////////////
-          //make red channel stack with images 1, 3, and 4
+          //make red channel stack with images 2 (1ch green), 3 (1ch red), and 5 (2ch) in that animal's image list
 		  ////////////
-          open(indir+"/"+im1);
+          open(indir+"/"+im2);
           open(indir+"/"+im3);
-          open(indir+"/"+im4);
+          open(indir+"/"+im5);
 
-          formatloc = indexOf(im1, "_2ch");
-		  newname = substring(im1, 0, formatloc);
+          //uses the last file in the list as the naming basis for the saved stacks
+          formatloc = indexOf(im5, "_2ch");
+		  newname = substring(im5, 0, formatloc);
 
 		  //use filenames as stack names
 		  //do not keep original images
@@ -63,14 +67,14 @@ function modifyImages() {
 		  print("Saved "+outdir+"/"+newname+"_Redmultichannel");
 
 		  ////////////
-		  //now the same but for 647 stack with images 2, 3, and 5
+		  //now the same but for 647 stack with images 1, 2, and 4
 		  ////////////
-		  open(indir+"/"+im2);
-          open(indir+"/"+im3);
-          open(indir+"/"+im5);
+		  open(indir+"/"+im1);
+          open(indir+"/"+im2);
+          open(indir+"/"+im4);
 
-          formatloc = indexOf(im1, "_2ch");
-		  newname = substring(im1, 0, formatloc);
+          formatloc = indexOf(im5, "_2ch");
+		  newname = substring(im5, 0, formatloc);
 
 		  //use filenames as stack names
 		  //do not keep original images
