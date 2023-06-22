@@ -86,20 +86,43 @@ In addition to the vertical position of cells within the brain tissue, we gain i
 
 To simplify the manual counting process, my pipeline automatically generates image stacks which can easily be scrolled through in ImageJ/FIJI. These image stacks contain 3 layers: two single-channel images as the first and third images in the stack, with the merged, colorized image of those two channels together in the middle of the stack. This allows the scientist doing the counting to quickly scroll between single and multi-channel versions of the same image making it easy to confirm that the same cell is labeled with both color channels, as opposed to cells that are only labeled by one color channel.
 
+This uses the above [Assemble Multi Stack](https://github.com/ellen-dege/public-demo-code/blob/main/image_analysis_code/03_assemble_multi_stack.ijm) macro.
+
+First, copy the relevant single channel and two-channel RGB images from "01_preprocessed" into "03_channels_for_multis", only including the channels you want to count in colors that are easy for you to see. In this example, I will have three single-channel images, in green, red, and far-red, and then two corresponding two-channel RGB images for the pairs of these three channels that I want to compare (green+red and green+far-red) since the green channel contains our gene of interest in this experiment, so a total of 5 versions of this one microscope image.
+
+When you run the macro in ImageJ/FIJI, you will again be prompted to select the local of an input and output directory.
+
+<img width="457" alt="FIJI_09_multi_stack_in_out_dir" src="https://github.com/ellen-dege/public-demo-code/assets/46907273/3c683512-d781-4605-822b-e32435c1b2c1">
+
+After you select the directories and click OK, you will see your images quickly load and then form a stack in a single window. You will then be prompted to use the FIJI sorter tool (using the \< or \> arrows) to sort the colorized image to be at the center of the stack (I find this to be the most helpful position for quick counting). If the FIJI sorter tool window (on the left in the below screenshot) does not appear at first, check for it behind other windows or on other monitors if you have multiple - it will be open but may be hidden.
+
+<img width="677" alt="FIJI_10_sort_nice_selection_with_image_and_dialogues" src="https://github.com/ellen-dege/public-demo-code/assets/46907273/b798269c-7f66-497c-a9bb-6c92bce3e66b">
+
+When you have done this, the trackbar at the bottom of the image will be in the middle when you're viewing the multichannel RGB image. Then press OK and the macro will save this stack, and prompt you to do the same for all other stacks and image sets in the directory. A log window will also open to show you the list of saved files after they have completed.
+
+The goal for counting is to be able to scroll or use the arrowkeys in FIJI to quickly toggle between the single and multi-channel images to help identify cells that are clearly labeled in both conditions, as you can see in the gif below, and which is why the multichannel image being in the middle is ideal.
+
+![FIJI_switch_between_channels_trimmed02](https://github.com/ellen-dege/public-demo-code/assets/46907273/990528ba-bc4f-40e1-af4a-b45eb1d73cd4)
+
+
 ### 4. Blind filenames
 
-To prevent unconscious bias during cell counting, I use the helpful [Blind Analysis](https://github.com/quantixed/imagej-macros#blind-analysis) macro from [quantixed](https://github.com/quantixed) and save the resulting .tifs and key to my "05_blinded" folder. Note that if you analyze your images in multiple batches (a good approach for a large dataset) you should have separate blinded directories for each batch as the blinding naming will restart at 0001 each time you run it.
+To prevent unconscious bias during cell counting, I use the helpful [Blind Analysis](https://github.com/quantixed/imagej-macros#blind-analysis) macro from [quantixed](https://github.com/quantixed) and save the resulting .tifs and key to my "05_blinded" folder. Note that if you analyze your images in multiple batches (a good approach for a large dataset) you should have separate blinded directories for each batch as the blinding naming will restart at 0001 each time you run it. This step can also be performed earlier in this workflow if the microscopist has not included experimental conditions in the filenames and the person counting cells is not the same as the person doing the microcopy.
 
 ### 5. Manually count cells in FIJI and save results
 
-To count the cells in FIJI, I use the Multi-point Tool on the toolbar. Press 'm' (Analyze>Measure) to view the list of the counter and stack position associated with each point. A good rule of thumb is to use the same counter number as the slice that you're counting.
-<img width="618" alt="FIJI_09_multitool" src="https://github.com/ellen-dege/public-demo-code/assets/46907273/7b7d149d-891b-4250-bd66-723d1da1c678">
+To count the cells in FIJI, I use the Multi-point Tool on the toolbar. Dobule-click the Multi-point tool icon to show the multi-tool options. A good rule of thumb is to use the same counter number as the slice that you're counting, otherwise it defaults to all points being assigned to Counter=0. Using different counters for each layer is critical if you want to count cells in each of the conditions, but not if you only want the cell positions of a single channel.
+
+Simply click on a cell to add a point to the counter. Each point will appear on the associated image stack layer that you are viewing when you click, so keep in mind that it may become crowded with points as you go, especially if all points appear on all layers. You can click to drag points out of the way if needed, but the macro records the positioning of each point so it is important to keep them somewhat centered within the cell body. 
+
+<img width="618" alt="FIJI_11_multitool" src="https://github.com/ellen-dege/public-demo-code/assets/46907273/03b221e5-aac9-4409-9cb4-68fee0eca46e">
+<img width="290" alt="FIJI_11_multitool_options" src="https://github.com/ellen-dege/public-demo-code/assets/46907273/2d2d5031-df36-4339-af8f-61ce4b51615f">
 
 To save your results, you will want to save a copy of the image itself (will save with the counters) as a .tiff, which I normally do in a "results" directory within "05_blinded". Then if you haven't already, press 'm' or command+'m' (or from the dropdown menu, select Analyze > Measure) to display the counters for each point. You can then save this table as a text file in the same results folder. I use the format results_00NN.txt to match the image filename.
 
 ### 6. Unblind images and analyze results
 
-With the log.txt and results_00NN.txt files as inputs, you can now use the above [Laminar Distance Analysis python script](https://github.com/ellen-dege/public-demo-code/blob/main/image_analysis_code/KIF_laminar_dist_analysis03.ipynb) to quantify the laminar distance aka vertical positioning of the cells in your tissue. This sample only looks at the vertical position of cells in one single microscope image channel across 4 different conditions, but this can also be done across the different stained color channels or within sub-populations of cells that were labeled by multiple overlapping channels.
+With the log.txt and results_00NN.txt files as inputs, you can now use the above [Cell Position Analysis python script](https://github.com/ellen-dege/public-demo-code/blob/main/image_analysis_code/KIF_laminar_dist_analysis03.ipynb) to quantify the laminar distance aka vertical positioning of the cells in your tissue. This sample only looks at the vertical position of cells in one single microscope image channel across 4 different conditions, but this can also be done across the different stained color channels or within sub-populations of cells that were labeled by multiple overlapping channels.
 
 # References and related links
 - [ImageJ/FIJI documentation](https://imagej.net/ij/index.html)
