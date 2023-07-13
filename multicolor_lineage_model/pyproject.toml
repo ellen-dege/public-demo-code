@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "multicolor-lineage-model"
+version = "0.1.0"
+description = "Generative model of multicolor cell lineage tracing project"
+authors = ["ellen-dege"]
+readme = "README.md"
+packages = [{include = "multicolor_lineage_model"}]
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.13"
+numpy = "^1.25.1"
+matplotlib = "^3.7.2"
+pandas = "^2.0.3"
+jupyter = "^1.0.0"
+seaborn = "^0.12.2"
+scipy = "^1.11.1"
+sklearn = "^0.0.post5"
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
