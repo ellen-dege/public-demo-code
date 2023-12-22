@@ -3,7 +3,9 @@ Code demos for public sharing
 This repo is for sharing code samples related to past, published, or some versions of unpublished work. Versions of code included here will be edited for broad understanding as examples of my past work, as executable jupyter notebooks wherever possible. Code related to my thesis work and related publications will be made public in separate repos close to publication time, or shared with collaborators.
 
 # Updates
-May-June 2022: Edited image_analysis_code for readability by general scientific audience, with extensive README.
+July 2023: Began addition of multicolor lineage model - a small agent based computational model of biological imaging data used to track cell divisions and migration in a cross-section of a developing brain slice. Based on PhD coursework and expanded during postdoctoral fellowship -- in progress.
+
+May-June 2023: Edited image_analysis_code for readability by general scientific audience, with extensive README.
 
 11/30/22: I successfully defended my PhD! Not many code updates around this time.
 
