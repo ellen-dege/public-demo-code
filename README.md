@@ -21,7 +21,7 @@ The full image analysis protocol:
 5. [Manually count cells in FIJI and save results](https://github.com/ellen-dege/public-demo-code/tree/main/image_analysis_code#5-unblind-images-and-analyze-results)
 6. [Unblind images and analyze results](https://github.com/ellen-dege/public-demo-code/tree/main/image_analysis_code#6-unblind-images-and-analyze-results)
 
-Accordingly, my workding directories within the parent folder for this workflow are named:
+Accordingly, my working directories within the parent folder for this workflow are named:
 - 01_originals
 - 02_preprocessed
 - 03_channels_for_multis
